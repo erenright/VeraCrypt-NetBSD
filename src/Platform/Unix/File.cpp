@@ -31,6 +31,8 @@
 #include <sys/file.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+// FIXME: TC_NETBSD ?
+#include <sys/ioctl.h>
 
 #include "Platform/File.h"
 #include "Platform/TextReader.h"

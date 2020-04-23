@@ -33,39 +33,32 @@ namespace VeraCrypt
 	DevicePath CoreFreeBSD::AttachFileToLoopDevice (const FilePath &filePath, bool readOnly) const
 	{
 		list <string> args;
-		args.push_back ("-a");
-		args.push_back ("-t");
-		args.push_back ("vnode");
 
 		if (readOnly)
 		{
-			args.push_back ("-o");
-			args.push_back ("readonly");
+			args.push_back ("-r");
 		}
 
-		args.push_back ("-f");
+		args.push_back ("-c");
+		args.push_back ("vnd0");
 		args.push_back (filePath);
 
-		string dev = StringConverter::Trim (Process::Execute ("mdconfig", args));
+		string dev = StringConverter::Trim (Process::Execute ("vnconfig", args));
 
-		if (dev.find ("/") == string::npos)
-			dev = string ("/dev/") + dev;
-
-		return dev;
+		return "/dev/vnd0";
 	}
 
 	void CoreFreeBSD::DetachLoopDevice (const DevicePath &devicePath) const
 	{
 		list <string> args;
-		args.push_back ("-d");
 		args.push_back ("-u");
-		args.push_back (StringConverter::GetTrailingNumber (devicePath));
+		args.push_back (devicePath);
 
 		for (int t = 0; true; t++)
 		{
 			try
 			{
-				Process::Execute ("mdconfig", args);
+				Process::Execute ("vnconfig", args);
 				break;
 			}
 			catch (ExecutedProcessFailed&)
@@ -156,7 +149,7 @@ namespace VeraCrypt
 		static Mutex mutex;
 		ScopeLock sl (mutex);
 
-		struct statfs *sysMountList;
+		struct statvfs *sysMountList;
 		int count = getmntinfo (&sysMountList, MNT_NOWAIT);
 		throw_sys_if (count == 0);
 

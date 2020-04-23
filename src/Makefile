@@ -363,6 +363,56 @@ ifeq "$(shell uname -s)" "FreeBSD"
 endif
 
 
+#------ NetBSD configuration ------
+
+ifeq "$(shell uname -s)" "NetBSD"
+
+	# FIXME: NetBSD
+	PLATFORM := FreeBSD
+	PLATFORM_UNSUPPORTED := 1
+	# FIXME: TC_NETBSD
+	C_CXX_FLAGS += -DTC_UNIX -DTC_BSD -DTC_FREEBSD
+	
+	CC := cc
+	CXX := c++
+	
+	ifeq "$(TC_BUILD_CONFIG)" "Release"
+		C_CXX_FLAGS += -fdata-sections -ffunction-sections -fpie
+		LFLAGS += -Wl,--gc-sections -pie
+
+		ifneq "$(shell ld --help 2>&1 | grep sysv | wc -l)" "0"
+			LFLAGS += -Wl,--hash-style=sysv
+		endif
+
+		WXCONFIG_CFLAGS += -fpie -fPIC
+		WXCONFIG_CXXFLAGS += -fpie -fPIC
+	endif
+
+	ifeq "$(SIMD_SUPPORTED)" "1"
+		CFLAGS += -msse2 -maes
+		CXXFLAGS += -msse2 -maes
+
+		ifeq "$(origin SSSE3)" "command line"
+			CFLAGS += -mssse3
+			CXXFLAGS += -mssse3
+		endif
+
+		ifeq "$(origin SSE41)" "command line"
+			CFLAGS += -mssse3 -msse4.1
+			CXXFLAGS += -mssse3 -msse4.1
+		endif
+	endif
+	
+	ifeq "$(origin NOSSE2)" "command line"
+		CFLAGS += -mno-sse2
+		CXXFLAGS += -mno-sse2
+		WXCONFIG_CFLAGS += -mno-sse2
+		WXCONFIG_CXXFLAGS += -mno-sse2
+	endif
+
+endif
+
+
 #------ Solaris configuration ------
 
 ifeq "$(shell uname -s)" "SunOS"

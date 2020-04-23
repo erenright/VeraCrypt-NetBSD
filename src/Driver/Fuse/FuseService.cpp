@@ -10,7 +10,8 @@
  code distribution packages.
 */
 
-#define FUSE_USE_VERSION  25
+// TODO: check if this is necessary
+#define FUSE_USE_VERSION  26
 #include <errno.h>
 #include <fcntl.h>
 #include <fuse.h>
@@ -51,7 +52,7 @@ namespace VeraCrypt
 		return 0;
 	}
 
-	static void *fuse_service_init ()
+	static void *fuse_service_init (fuse_conn_info *ci) // TODO: for FUSE 26
 	{
 		try
 		{
@@ -440,6 +441,11 @@ namespace VeraCrypt
 			args.push_back ("allow_other");
 		}
 
+		// FIXME
+		args.clear();
+		args.push_back (FuseService::GetDeviceType());
+		args.push_back (fuseMountPoint);
+
 		ExecFunctor execFunctor (openVolume, slotNumber);
 		Process::Execute ("fuse", args, -1, &execFunctor);
 
@@ -583,7 +589,9 @@ namespace VeraCrypt
 
 		SignalHandlerPipe->GetWriteFD();
 
-		_exit (fuse_main (argc, argv, &fuse_service_oper));
+		// FIXME: breaks other builds..?
+		putenv("PERFUSE_BUFSIZE=131072");
+		_exit (fuse_main (argc, argv, &fuse_service_oper, NULL));
 	}
 
 	VolumeInfo FuseService::OpenVolumeInfo;
