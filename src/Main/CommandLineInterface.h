@@ -85,7 +85,7 @@ namespace VeraCrypt
         shared_ptr<SecureBuffer> ArgTokenPin;
         bool ArgDisableFileSizeCheck;
         bool ArgUseLegacyPassword;
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
         bool ArgUseDummySudoPassword;
 #endif
 

@@ -535,7 +535,7 @@ namespace VeraCrypt
 			Core->SetAdminPasswordCallback (shared_ptr <GetStringFunctor> (new AdminPasswordRequestHandler));
 		}
 
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
 		Core->ForceUseDummySudoPassword (CmdLine->ArgUseDummySudoPassword);
 #endif
 

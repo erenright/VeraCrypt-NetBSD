@@ -32,7 +32,7 @@ namespace VeraCrypt
 		ArgTrueCryptMode (false),
 		ArgDisableFileSizeCheck (false),
 		ArgUseLegacyPassword (false),
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
 		ArgUseDummySudoPassword (false),
 #endif
 		StartBackgroundTask (false)
@@ -103,7 +103,7 @@ namespace VeraCrypt
 		parser.AddParam (								_("Mount point"), wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL);
 		parser.AddSwitch (L"",	L"no-size-check",		_("Disable check of container size against disk free space."));
 		parser.AddSwitch (L"",	L"legacy-password-maxlength", _("Use legacy maximum password length (64 UTF-8 bytes)"));
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
 		parser.AddSwitch (L"",	L"use-dummy-sudo-password",	_("Use dummy password in sudo to detect if it is already authenticated"));
 #endif
 		wxString str;
@@ -330,7 +330,7 @@ namespace VeraCrypt
 					ArgFilesystem = VolumeCreationOptions::FilesystemType::exFAT;
 				else if (str.IsSameAs (L"APFS", false))
 					ArgFilesystem = VolumeCreationOptions::FilesystemType::APFS;
-#elif defined (TC_FREEBSD) || defined (TC_SOLARIS)
+#elif defined (TC_FREEBSD) || defined (TC_SOLARIS) || defined (TC_NETBSD)
 				else if (str.IsSameAs (L"UFS", false))
 					ArgFilesystem = VolumeCreationOptions::FilesystemType::UFS;
 #endif
@@ -344,7 +344,7 @@ namespace VeraCrypt
 		ArgTrueCryptMode = parser.Found (L"truecrypt");
 		ArgDisableFileSizeCheck = parser.Found (L"no-size-check");
 		ArgUseLegacyPassword = parser.Found (L"legacy-password-maxlength") || ArgTrueCryptMode;		
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
 		ArgUseDummySudoPassword = parser.Found (L"use-dummy-sudo-password");
 #endif
 

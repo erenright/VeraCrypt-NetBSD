@@ -20,7 +20,7 @@ namespace VeraCrypt
 {
 	CoreBase::CoreBase ()
 		: DeviceChangeInProgress (false)
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
 		, UseDummySudoPassword (false)
 #endif
 	{

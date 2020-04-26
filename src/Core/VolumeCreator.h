@@ -57,7 +57,7 @@ namespace VeraCrypt
 				return VolumeCreationOptions::FilesystemType::Ext3;
 #elif defined (TC_MACOSX)
 				return VolumeCreationOptions::FilesystemType::MacOsExt;
-#elif defined (TC_FREEBSD) || defined (TC_SOLARIS)
+#elif defined (TC_FREEBSD) || defined (TC_SOLARIS) || defined (TC_NETBSD)
 				return VolumeCreationOptions::FilesystemType::UFS;
 #else
 				return VolumeCreationOptions::FilesystemType::FAT;

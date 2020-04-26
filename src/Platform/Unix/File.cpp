@@ -23,6 +23,10 @@
 #include <sys/disk.h>
 #endif
 
+#ifdef TC_NETBSD
+#include <sys/ioctl.h>
+#endif
+
 #ifdef TC_SOLARIS
 #include <stropts.h>
 #include <sys/dkio.h>
@@ -31,8 +35,6 @@
 #include <sys/file.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-// FIXME: TC_NETBSD ?
-#include <sys/ioctl.h>
 
 #include "Platform/File.h"
 #include "Platform/TextReader.h"
@@ -110,7 +112,7 @@ namespace VeraCrypt
 			throw_sys_sub_if (ioctl (FileHandle, DKIOCGETBLOCKSIZE, &blockSize) == -1, wstring (Path));
 			return blockSize;
 
-#elif defined (TC_FREEBSD)
+#elif defined (TC_FREEBSD) || defined (TC_NETBSD)
 			u_int sectorSize;
 			throw_sys_sub_if (ioctl (FileHandle, DIOCGSECTORSIZE, &sectorSize) == -1, wstring (Path));
 			return (uint32) sectorSize;

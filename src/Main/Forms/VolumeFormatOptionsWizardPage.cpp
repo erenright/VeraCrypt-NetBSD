@@ -43,7 +43,7 @@ namespace VeraCrypt
 		FilesystemTypeChoice->Append (L"exFAT",				(void *) VolumeCreationOptions::FilesystemType::exFAT);
 		if (wxPlatformInfo::Get().CheckOSVersion (10, 13))
 			FilesystemTypeChoice->Append (L"APFS",			(void *) VolumeCreationOptions::FilesystemType::APFS);
-#elif defined (TC_FREEBSD) || defined (TC_SOLARIS)
+#elif defined (TC_FREEBSD) || defined (TC_SOLARIS) || defined (TC_NETBSD)
 		FilesystemTypeChoice->Append (L"UFS",				(void *) VolumeCreationOptions::FilesystemType::UFS);
 #endif
 

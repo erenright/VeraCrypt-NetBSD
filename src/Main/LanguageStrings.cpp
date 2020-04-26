@@ -40,12 +40,16 @@ namespace VeraCrypt
 
 	void LanguageStrings::Init ()
 	{
+		size_t count = 0;
+		wcout << L"loading..." << endl;
 		foreach (XmlNode node, XmlParser (Resources::GetLanguageXml()).GetNodes (L"entry"))
 		{
 			wxString text = node.InnerText;
 			text.Replace (L"\\n", L"\n");
 			Map[StringConverter::ToSingle (wstring (node.Attributes[L"key"]))] = text;
+			++count;
 		}
+		wcout << L"done: " << count << endl;
 
 		Map["EXCEPTION_OCCURRED"] = _("Exception occurred");
 		Map["MOUNT"] = _("Mount");

@@ -10,7 +10,7 @@
  code distribution packages.
 */
 
-// TODO: check if this is necessary
+// FIXME: check if this is necessary
 #define FUSE_USE_VERSION  26
 #include <errno.h>
 #include <fcntl.h>
@@ -52,7 +52,7 @@ namespace VeraCrypt
 		return 0;
 	}
 
-	static void *fuse_service_init (fuse_conn_info *ci) // TODO: for FUSE 26
+	static void *fuse_service_init (fuse_conn_info *ci) // FIXME: for FUSE 26
 	{
 		try
 		{
@@ -298,8 +298,9 @@ namespace VeraCrypt
 				return size;
 			}
 		}
-#ifdef TC_FREEBSD
+#if defined (TC_FREEBSD) || defined (TC_NETBSD)
 		// FreeBSD apparently retries failed write operations forever, which may lead to a system crash.
+		// NetBSD behaviour unknown, but assuming similar to FreeBSD
 		catch (VolumeReadOnly&)
 		{
 			return size;

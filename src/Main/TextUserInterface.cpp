@@ -792,7 +792,7 @@ namespace VeraCrypt
 				{
 					ShowInfo (L" 5) APFS");      filesystems.push_back (VolumeCreationOptions::FilesystemType::APFS);
 				}
-#elif defined (TC_FREEBSD) || defined (TC_SOLARIS)
+#elif defined (TC_FREEBSD) || defined (TC_SOLARIS) || defined (TC_NETBSD)
 				ShowInfo (L" 3) UFS"); filesystems.push_back (VolumeCreationOptions::FilesystemType::UFS);
 #endif
 
@@ -889,7 +889,7 @@ namespace VeraCrypt
 			case VolumeCreationOptions::FilesystemType::MacOsExt:	fsFormatter = "newfs_hfs"; break;
 			case VolumeCreationOptions::FilesystemType::exFAT:		fsFormatter = "newfs_exfat"; break;
 			case VolumeCreationOptions::FilesystemType::APFS:		fsFormatter = "newfs_apfs"; break;
-#elif defined (TC_FREEBSD) || defined (TC_SOLARIS)
+#elif defined (TC_FREEBSD) || defined (TC_SOLARIS) || defined (TC_NETBSD)
 			case VolumeCreationOptions::FilesystemType::UFS:		fsFormatter = "newfs" ; break;
 #endif
 			default: throw ParameterIncorrect (SRC_POS);

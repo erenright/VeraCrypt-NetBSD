@@ -302,7 +302,7 @@ namespace VeraCrypt
 				//	If for some reason we are getting empty output from pipe, we revert to old behavior
 				//	We also use the old way if the user is forcing the use of dummy password for sudo
 				
-#if defined(TC_LINUX ) || defined (TC_FREEBSD)
+#if defined(TC_LINUX ) || defined (TC_FREEBSD) || defined (TC_NETBSD)
 				
 				if (!Core->GetUseDummySudoPassword ())
 				{

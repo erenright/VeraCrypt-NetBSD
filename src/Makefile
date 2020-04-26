@@ -367,11 +367,9 @@ endif
 
 ifeq "$(shell uname -s)" "NetBSD"
 
-	# FIXME: NetBSD
-	PLATFORM := FreeBSD
+	PLATFORM := NetBSD
 	PLATFORM_UNSUPPORTED := 1
-	# FIXME: TC_NETBSD
-	C_CXX_FLAGS += -DTC_UNIX -DTC_BSD -DTC_FREEBSD
+	C_CXX_FLAGS += -DTC_UNIX -DTC_BSD -DTC_NETBSD
 	
 	CC := cc
 	CXX := c++

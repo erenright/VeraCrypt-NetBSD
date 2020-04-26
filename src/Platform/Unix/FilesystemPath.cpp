@@ -103,7 +103,7 @@ namespace VeraCrypt
 		string pathStr = StringConverter::StripTrailingNumber (StringConverter::ToSingle (Path));
 		path = pathStr.substr (0, pathStr.size() - 1);
 
-#elif defined (TC_FREEBSD)
+#elif defined (TC_FREEBSD) || defined (TC_NETBSD)
 
 		string pathStr = StringConverter::ToSingle (Path);
 		size_t p = pathStr.rfind ("s");
