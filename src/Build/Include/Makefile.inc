@@ -53,7 +53,7 @@ endif
 # Embedded files
 OD_BIN := od -v -t u1 -A n
 # FIXME: May not be portable
-TR_SED_BIN := tr '\n' ' ' | tr -s ' ' ',' | sed -e 's/^,//g' -e 's/,$$/n/' | tr 'n' '\n' | sed -E -e 's/000/0/g' -e 's/,0*([1-9]+)/,\1/g'
+TR_SED_BIN := tr '\n' ' ' | tr -s ' ' ',' | sed -e 's/^,//g' -e 's/,$$/n/' | tr 'n' '\n' | sed -E -e 's/000/0/g' -e 's/,0*([1-9]+)/,\1/g' -e 's/^0*([1-9]+)/\1/'
 
 %.xml.h: %.xml
 	@echo Converting $(<F)
